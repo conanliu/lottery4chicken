@@ -11,6 +11,7 @@ public class Lottery4Chicken {
     private static String BIG_AWARD_TEMPLATE = "恭喜 %s 在54哥特约赞助的集资活动中抽中特等奖!";
     private static String FIRST_AWARD_TEMPLATE = "恭喜 %s 在54哥特约赞助的集资活动中抽中一等奖!";
     private static String SECOND_AWARD_TEMPLATE = "恭喜 %s 在54哥特约赞助的集资活动中抽中二等奖!";
+    private static String THIRD_AWARD_TEMPLATE = "恭喜 %s 在54哥特约赞助的集资活动中抽中三等奖!";
 
     /**
      * 鸽子们（这不是鸡吗？）
@@ -37,9 +38,11 @@ public class Lottery4Chicken {
     private static List<LotteryService.LotteryRate> initData() {
         List<LotteryService.LotteryRate> chickens = new ArrayList<>();
 
-        chickens.add(new Chicken(999999, "韩老师"));
-        chickens.add(new Chicken(0.9, "吸毒老师"));
-        chickens.add(new Chicken(0.1, "悟空老师"));
+        int amount = 17;
+        while (amount > 0) {
+            chickens.add(new Chicken(1, amount + "号"));
+            amount--;
+        }
 
         return chickens;
     }
@@ -82,16 +85,13 @@ public class Lottery4Chicken {
     // 飞吧，鸽子们
     public static void main(String[] args) {
         // 设置种子
-        LotteryService.setSeed(54L);
+        LotteryService.setSeed(20170103L);
         // 鸽子们的数据
         List<LotteryService.LotteryRate> chickens = initData();
 
-        Chicken zero = lottery4Chicken(chickens);
-        Chicken first = lottery4Chicken(chickens);
-        Chicken second = lottery4Chicken(chickens);
-
-        System.out.println(String.format(BIG_AWARD_TEMPLATE, zero.getNick()));
-        System.out.println(String.format(FIRST_AWARD_TEMPLATE, first.getNick()));
-        System.out.println(String.format(SECOND_AWARD_TEMPLATE, second.getNick()));
+        System.out.println(String.format(BIG_AWARD_TEMPLATE, lottery4Chicken(chickens).getNick()));
+        System.out.println(String.format(FIRST_AWARD_TEMPLATE, lottery4Chicken(chickens).getNick()));
+        System.out.println(String.format(SECOND_AWARD_TEMPLATE, lottery4Chicken(chickens).getNick()));
+        System.out.println(String.format(THIRD_AWARD_TEMPLATE, lottery4Chicken(chickens).getNick()));
     }
 }
